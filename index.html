@@ -132,6 +132,8 @@ h2 { font-family: var(--display); font-weight: 700; text-transform: uppercase; f
   clip-path: polygon(24% 0, 38% 7%, 62% 7%, 76% 0, 100% 20%, 88% 42%, 79% 36%, 79% 100%, 21% 100%, 21% 36%, 12% 42%, 0 20%);
   display: grid; place-items: center; padding-top: .75rem; font-family: var(--display); font-weight: 700; font-size: 1.7rem; }
 .p1 .jersey { width: 5.4rem; height: 5.4rem; font-size: 2.1rem; }
+.jersey-wrap { display: block; filter: drop-shadow(0 0 1px rgba(0, 0, 0, .35)) drop-shadow(0 2px 3px rgba(0, 0, 0, .12)); }
+.jersey.light { color: #1b2430; }
 .pod-name { font-weight: 600; line-height: 1.25; }
 .pod-goals { font-family: var(--display); font-weight: 700; font-size: 3rem; line-height: 1; margin-top: 6px; font-variant-numeric: tabular-nums; }
 .p1 .pod-goals { font-size: 3.8rem; color: var(--red); }
@@ -411,9 +413,15 @@ footer p { margin: 0; }
   $("updated").textContent = `Stats through ${games.length ? day(games[games.length - 1].date) : "—"} · updated ${UPDATED}.`;
 
   /* ---------- Podium ---------- */
+  const jersey = (p) => {
+    const color = (LINES[p.line] || {}).color || "var(--silver)";
+    const j = el("div", "jersey" + (color.startsWith("#") && isLight(color) ? " light" : ""), String(p.num));
+    j.style.background = color.startsWith("#") && isLight(color) ? "#f8fafc" : color; // White line gets a true-white jersey
+    const w = el("div", "jersey-wrap"); w.append(j); return w;
+  };
   $("podium").replaceChildren(...players.slice(0, 3).map((p, i) => {
     const c = el("div", `pod p${i + 1}`);
-    c.append(el("div", "medal", String(i + 1)), el("div", "jersey", String(p.num)), el("div", "pod-name", p.name),
+    c.append(el("div", "medal", String(i + 1)), jersey(p), el("div", "pod-name", p.name),
       el("div", "pod-goals", String(p.g)), el("div", "pod-unit", p.g === 1 ? "goal" : "goals"),
       el("div", "pod-sub", `${f2(p.gpg)} per game · ${p.gp} GP`));
     return c;

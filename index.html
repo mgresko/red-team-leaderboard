@@ -17,7 +17,8 @@
         each goal they scored, e.g. [15, 15, 15] for a hat trick).
      2. Add one RSVP to the end of every player's rsvp list, in the same
         order as GAMES: "In", "Out", or "" if they never answered.
-   Everything on the page recalculates from these two lists.
+   To move a player to another line, change their `line` (A, B or C).
+   Everything on the page recalculates from these lists.
    ===================================================================== */
 const SEASON = "2026–27";
 const UPDATED = "Nov 2, 2026";
@@ -31,24 +32,30 @@ const GAMES = [
   { date: "2026-11-01", opponent: "",        gf: 3,  ga: 2, scorers: [8, 8, 15] },
 ];
 
+const LINES = {
+  A: { name: "Red",   color: "#d7263d" },
+  B: { name: "White", color: "#c3ccd6" },
+  C: { name: "Blue",  color: "#2563eb" },
+};
+
 const ROSTER = [
-  { num: 7,  name: "Mike McBride",     rsvp: ["Out", "In",  "Out", "In",  "In",  "In"]  },
-  { num: 10, name: "Marty McBride",    rsvp: ["In",  "Out", "Out", "In",  "In",  "Out"] },
-  { num: 67, name: "Jackie Narowitz",  rsvp: ["In",  "In",  "In",  "Out", "In",  "In"]  },
-  { num: 59, name: "Amanda Jurco",     rsvp: ["In",  "In",  "In",  "In",  "In",  "In"]  },
-  { num: 42, name: "Steve Ultrup",     rsvp: ["In",  "In",  "In",  "In",  "In",  "Out"] },
-  { num: 94, name: "Eugene Jurco",     rsvp: ["In",  "In",  "In",  "In",  "In",  "In"]  },
-  { num: 12, name: "Nick Bartucci",    rsvp: ["In",  "In",  "In",  "Out", "In",  "In"]  },
-  { num: 9,  name: "Cameron King",     rsvp: ["In",  "In",  "In",  "In",  "In",  "In"]  },
-  { num: 3,  name: "John Angerola",    rsvp: ["In",  "In",  "In",  "Out", "In",  "In"]  },
-  { num: 22, name: "Andy Gargiulo",    rsvp: ["In",  "In",  "In",  "In",  "In",  "Out"] },
-  { num: 8,  name: "Joe Godina",       rsvp: ["In",  "In",  "In",  "In",  "In",  "In"]  },
-  { num: 14, name: "Mike Eppich",      rsvp: ["In",  "In",  "In",  "In",  "In",  "In"]  },
-  { num: 19, name: "Brian Maher",      rsvp: ["In",  "In",  "In",  "In",  "In",  "In"]  },
-  { num: 15, name: "Charlie Eppich",   rsvp: ["Out", "In",  "In",  "In",  "Out", "In"]  },
-  { num: 98, name: "Bobby Malinowski", rsvp: ["In",  "In",  "Out", "In",  "In",  "In"]  },
-  { num: 24, name: "Matt Gresko",      rsvp: ["In",  "In",  "Out", "In",  "In",  "In"]  },
-  { num: 11, name: "Josh Ferreri",     rsvp: ["In",  "",    "",    "In",  "In",  "Out"] },
+  { num: 14, name: "Mike Eppich",      line: "A", rsvp: ["In",  "In",  "In",  "In",  "In",  "In"]  },
+  { num: 19, name: "Brian Maher",      line: "A", rsvp: ["In",  "In",  "In",  "In",  "In",  "In"]  },
+  { num: 15, name: "Charlie Eppich",   line: "A", rsvp: ["Out", "In",  "In",  "In",  "Out", "In"]  },
+  { num: 98, name: "Bobby Malinowski", line: "A", rsvp: ["In",  "In",  "Out", "In",  "In",  "In"]  },
+  { num: 24, name: "Matt Gresko",      line: "A", rsvp: ["In",  "In",  "Out", "In",  "In",  "In"]  },
+  { num: 11, name: "Josh Ferreri",     line: "A", rsvp: ["In",  "",    "",    "In",  "In",  "Out"] },
+  { num: 94, name: "Eugene Jurco",     line: "B", rsvp: ["In",  "In",  "In",  "In",  "In",  "In"]  },
+  { num: 12, name: "Nick Bartucci",    line: "B", rsvp: ["In",  "In",  "In",  "Out", "In",  "In"]  },
+  { num: 9,  name: "Cameron King",     line: "B", rsvp: ["In",  "In",  "In",  "In",  "In",  "In"]  },
+  { num: 3,  name: "John Angerola",    line: "B", rsvp: ["In",  "In",  "In",  "Out", "In",  "In"]  },
+  { num: 22, name: "Andy Gargiulo",    line: "B", rsvp: ["In",  "In",  "In",  "In",  "In",  "Out"] },
+  { num: 8,  name: "Joe Godina",       line: "B", rsvp: ["In",  "In",  "In",  "In",  "In",  "In"]  },
+  { num: 7,  name: "Mike McBride",     line: "C", rsvp: ["Out", "In",  "Out", "In",  "In",  "In"]  },
+  { num: 10, name: "Marty McBride",    line: "C", rsvp: ["In",  "Out", "Out", "In",  "In",  "Out"] },
+  { num: 67, name: "Jackie Narowitz",  line: "C", rsvp: ["In",  "In",  "In",  "Out", "In",  "In"]  },
+  { num: 59, name: "Amanda Jurco",     line: "C", rsvp: ["In",  "In",  "In",  "In",  "In",  "In"]  },
+  { num: 42, name: "Steve Ultrup",     line: "C", rsvp: ["In",  "In",  "In",  "In",  "In",  "Out"] },
 ];
 /* ===================================================================== */
 </script>
@@ -130,6 +137,37 @@ h2 { font-family: var(--display); font-weight: 700; text-transform: uppercase; f
 .p1 .pod-goals { font-size: 3.8rem; color: var(--red); }
 .pod-unit { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); font-weight: 600; }
 .pod-sub { font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+
+/* Lines */
+.ldot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; flex: none; vertical-align: 0;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .15); }
+.share { display: flex; height: 38px; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); margin-bottom: 14px; }
+.seg { display: flex; align-items: center; justify-content: center; gap: 6px; min-width: 0; color: #fff;
+  font-family: var(--display); font-weight: 700; font-size: 17px; letter-spacing: .02em; text-transform: uppercase; white-space: nowrap; overflow: hidden; }
+.seg.light { color: #1b2430; }
+.lines { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 12px; }
+.line-card { --c: #999; position: relative; overflow: hidden; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px 18px 14px; }
+.line-card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 5px; background: var(--c); }
+.line-card::after { content: ""; position: absolute; right: -40px; top: -40px; width: 120px; height: 120px; border-radius: 50%;
+  background: color-mix(in srgb, var(--c) 14%, transparent); pointer-events: none; }
+.line-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; position: relative; }
+.line-tag { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; font-weight: 700; color: var(--muted); }
+.line-name { font-family: var(--display); font-weight: 700; font-size: 1.9rem; text-transform: uppercase; line-height: 1; margin-top: 2px; }
+.line-goals { text-align: right; }
+.line-goals .big { font-family: var(--display); font-weight: 700; font-size: 3.2rem; line-height: .9; font-variant-numeric: tabular-nums; }
+.line-goals .unit { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); font-weight: 600; }
+.line-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 14px 0 12px; padding: 10px 0;
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); position: relative; }
+.line-stats div { display: grid; gap: 1px; }
+.line-stats b { font-family: var(--display); font-size: 1.4rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.line-stats span { font-size: 11px; color: var(--muted); }
+.line-roster { display: grid; gap: 4px; position: relative; }
+.lr { display: grid; grid-template-columns: 2.4rem 1fr auto; gap: 8px; align-items: center; font-size: 13px; }
+.lr .jn { border-color: color-mix(in srgb, var(--c) 55%, var(--line)); }
+.lr-g { font-weight: 700; font-variant-numeric: tabular-nums; min-width: 1.4rem; text-align: right; }
+.lr.zero { color: var(--muted); }
+.lr .star { color: var(--gold); font-size: 11px; margin-left: 4px; }
+.line-log { margin-top: 12px; }
 
 /* Cards */
 .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: 12px; }
@@ -231,6 +269,18 @@ footer p { margin: 0; }
     <div class="podium" id="podium"></div>
   </section>
 
+  <section>
+    <div class="sec-head"><h2>Goals by line</h2><p class="note">Line A = Red, B = White, C = Blue.</p></div>
+    <div class="share" id="line-share" role="img" aria-label="Share of team goals by line"></div>
+    <div class="lines" id="lines"></div>
+    <div class="card line-log">
+      <h3>Line scoring, game by game</h3>
+      <p class="note">Each bar is one game's goals, split by the line that scored them. Hover for the breakdown.</p>
+      <div class="log" id="line-log"></div>
+      <div class="legend" id="line-legend"></div>
+    </div>
+  </section>
+
   <section class="grid2">
     <div class="card">
       <h3>Goals by player</h3>
@@ -282,7 +332,6 @@ footer p { margin: 0; }
 
   <footer>
     <p id="updated"></p>
-    <p>Goals are credited by jersey number from the score sheet. A blank RSVP counts as not played.</p>
   </footer>
 </main>
 
@@ -296,7 +345,7 @@ footer p { margin: 0; }
   const rec = (w, l, t) => hasTies ? `${w}-${l}-${t}` : `${w}-${l}`;
 
   const players = ROSTER.map((p) => {
-    const s = { num: p.num, name: p.name, gp: 0, g: 0, w: 0, l: 0, t: 0, gf: 0, ga: 0, multi: 0, scoringGames: 0, perGame: [] };
+    const s = { num: p.num, name: p.name, line: p.line, gp: 0, g: 0, w: 0, l: 0, t: 0, gf: 0, ga: 0, multi: 0, scoringGames: 0, perGame: [] };
     games.forEach((g, i) => {
       const status = p.rsvp[i] || "";
       const goals = g.scorers.filter((n) => n === p.num).length;
@@ -341,6 +390,11 @@ footer p { margin: 0; }
     tip.style.left = x + "px"; tip.style.top = y + "px";
   };
   const line = (...parts) => { const d = el("div"); parts.forEach((p) => d.append(p)); return d; };
+  const dot = (key) => { const d = el("span", "ldot"); d.style.background = (LINES[key] || {}).color || "transparent"; return d; };
+  const named = (cls, p) => { const s = el("span", cls); s.append(dot(p.line), " ", p.name); return s; };
+  const NS = "http://www.w3.org/2000/svg";
+  const svgEl = (tag, attrs, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; return e; };
+  const isLight = (hex) => { const n = parseInt(hex.slice(1), 16); return (0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) > 170; };
 
   /* ---------- Header + tiles ---------- */
   $("season").textContent = SEASON + " season";
@@ -365,6 +419,108 @@ footer p { margin: 0; }
     return c;
   }));
 
+  /* ---------- Goals by line ---------- */
+  {
+    const lineOf = new Map(players.map((p) => [p.num, p.line]));
+    const lines = Object.keys(LINES).map((k) => {
+      const members = players.filter((p) => p.line === k);
+      const g = members.reduce((s, p) => s + p.g, 0);
+      const top = Math.max(0, ...members.map((p) => p.g));
+      return { key: k, ...LINES[k], members, g, top,
+        share: totalGoals ? g / totalGoals * 100 : 0,
+        perGame: games.length ? g / games.length : 0,
+        scorers: members.filter((p) => p.g > 0).length };
+    });
+
+    // Share bar
+    $("line-share").replaceChildren(...lines.filter((l) => l.g > 0).map((l) => {
+      const s = el("div", "seg" + (isLight(l.color) ? " light" : ""), Math.round(l.share) + "%");
+      s.style.flex = `${l.g} 1 0`; s.style.background = l.color;
+      return s;
+    }));
+
+    // Line cards
+    $("lines").replaceChildren(...lines.map((l) => {
+      const c = el("div", "line-card"); c.style.setProperty("--c", l.color);
+      const top = el("div", "line-top");
+      const left = el("div"); left.append(el("div", "line-tag", "Line " + l.key), el("div", "line-name", l.name));
+      const right = el("div", "line-goals"); right.append(el("div", "big", String(l.g)), el("div", "unit", l.g === 1 ? "goal" : "goals"));
+      top.append(left, right);
+      const stats = el("div", "line-stats");
+      const st = (v, label) => { const d = el("div"); d.append(el("b", null, v), el("span", null, label)); return d; };
+      stats.append(st(l.share.toFixed(0) + "%", "of team goals"), st(l.perGame.toFixed(1), "goals per game"),
+        st(`${l.scorers}/${l.members.length}`, "have scored"));
+      const roster = el("div", "line-roster");
+      l.members.forEach((p) => {
+        const r = el("div", "lr" + (p.g ? "" : " zero"));
+        const nm = el("span", null, p.name);
+        if (p.g && p.g === l.top) nm.append(el("span", "star", "★"));
+        r.append(el("span", "jn", String(p.num)), nm, el("span", "lr-g", String(p.g)));
+        roster.append(r);
+      });
+      c.append(top, stats, roster);
+      return c;
+    }));
+
+    // Legend
+    $("line-legend").replaceChildren(...lines.map((l) => {
+      const s = el("span"); const sw = el("span", "sw"); sw.style.background = l.color;
+      s.append(sw, `${l.name} (Line ${l.key})`); return s;
+    }));
+
+    // Stacked game-by-game chart
+    const box = $("line-log"), host = box.parentElement;
+    const tip = el("div", "tip"); tip.hidden = true; host.append(tip);
+    const perGame = games.map((g) => {
+      const counts = Object.fromEntries(lines.map((l) => [l.key, 0]));
+      let other = 0;
+      g.scorers.forEach((n) => { const k = lineOf.get(n); if (k in counts) counts[k]++; else other++; });
+      return { g, counts, other };
+    });
+    const draw = () => {
+      const W = Math.max(280, box.clientWidth || 600), H = 240, m = { t: 22, r: 6, b: 48, l: 28 };
+      const ymaxRaw = Math.max(1, ...games.map((g) => g.scorers.length));
+      const step = ymaxRaw > 8 ? 4 : 2, ymax = Math.ceil(ymaxRaw / step) * step;
+      const y = (v) => m.t + (H - m.t - m.b) * (1 - v / ymax);
+      const n = Math.max(1, games.length), band = (W - m.l - m.r) / n, bw = Math.min(44, band * 0.6);
+      const svg = svgEl("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Goals by line for each game" });
+      for (let v = 0; v <= ymax; v += step) {
+        svg.append(svgEl("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: "var(--grid)" }));
+        svg.append(svgEl("text", { x: m.l - 7, y: y(v), dy: "0.32em", "text-anchor": "end", fill: "var(--muted)", "font-size": 11 }, v));
+      }
+      perGame.forEach(({ g, counts, other }, i) => {
+        const cx = m.l + band * i + band / 2, x0 = cx - bw / 2;
+        let acc = 0;
+        const segs = [...lines.map((l) => [counts[l.key], l.color]), [other, "var(--ga)"]].filter(([v]) => v > 0);
+        segs.forEach(([v, color], j) => {
+          const top = y(acc + v), bottom = y(acc);
+          svg.append(svgEl("rect", { x: x0, width: bw, y: top, height: Math.max(0, bottom - top - (j < segs.length - 1 ? 1.5 : 0)),
+            rx: 2, fill: color, stroke: isLight(color.startsWith("#") ? color : "#000000") ? "rgba(0,0,0,.12)" : "none" }));
+          acc += v;
+        });
+        svg.append(svgEl("text", { x: cx, y: y(acc) - 6, "text-anchor": "middle", "font-size": 11, "font-weight": 700, fill: "var(--fg)" }, acc));
+        svg.append(svgEl("text", { x: cx, y: H - m.b + 17, "text-anchor": "middle", "font-size": 11, fill: "var(--muted)" }, day(g.date)));
+        svg.append(svgEl("text", { x: cx, y: H - m.b + 34, "text-anchor": "middle", "font-size": 11, "font-weight": 700,
+          fill: g.result === "W" ? "var(--ok)" : g.result === "L" ? "var(--bad)" : "var(--muted)" }, g.result));
+        const hit = svgEl("rect", { x: cx - band / 2, width: band, y: m.t, height: H - m.t, fill: "transparent" });
+        const show = (e) => showTip(host, tip, e, [
+          el("div", "tip-h", day(g.date) + (g.opponent ? " vs " + g.opponent : "") + ` · ${g.result} ${g.gf}-${g.ga}`),
+          ...lines.map((l) => { const sw = el("span", "sw"); sw.style.background = l.color;
+            return line(sw, `${l.name}: `, el("b", null, String(counts[l.key]))); }),
+          ...(other ? [line(`Unassigned: `, el("b", null, String(other)))] : []),
+        ]);
+        hit.addEventListener("pointerenter", show);
+        hit.addEventListener("pointermove", show);
+        hit.addEventListener("pointerleave", () => tip.hidden = true);
+        svg.append(hit);
+      });
+      box.replaceChildren(svg);
+    };
+    draw();
+    let w = box.clientWidth;
+    new ResizeObserver(() => { if (box.clientWidth !== w) { w = box.clientWidth; draw(); } }).observe(box);
+  }
+
   /* ---------- Goals bars ---------- */
   {
     const host = $("bars").parentElement;
@@ -377,7 +533,7 @@ footer p { margin: 0; }
       fill.style.width = (p.g / max * 100) + "%";
       fill.style.animationDelay = (p.rank * 30) + "ms";
       track.append(fill);
-      row.append(el("span", "jn", String(p.num)), el("span", "bar-name", p.name), track, el("span", "bar-val", String(p.g)));
+      row.append(el("span", "jn", String(p.num)), named("bar-name", p), track, el("span", "bar-val", String(p.g)));
       const show = (e) => showTip(host, tip, e, [
         el("div", "tip-h", `#${p.num} ${p.name}`),
         line(el("b", null, String(p.g)), " goals in ", el("b", null, String(p.gp)), " games"),
@@ -448,7 +604,7 @@ footer p { margin: 0; }
     });
     players.forEach((p) => {
       const name = el("div", "pname");
-      name.append(el("span", "jn", String(p.num)), el("span", null, p.name));
+      name.append(el("span", "jn", String(p.num)), named(null, p));
       cells.push(name);
       p.perGame.forEach((pg, i) => {
         const c = el("div", "cell");
@@ -483,7 +639,7 @@ footer p { margin: 0; }
         const td = (text, cls) => { const c = el("td", cls || null, text); tr.append(c); return c; };
         td(null, "l").append(el("span", "rank" + (p.rank <= 3 && p.g ? " r" + p.rank : ""), String(p.rank)));
         td(String(p.num), "l key");
-        td(p.name, "l");
+        td(null, "l").append(named(null, p));
         td(String(p.gp));
         td(String(p.g), "g");
         td(f2(p.gpg));

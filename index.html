@@ -21,7 +21,7 @@
    Everything on the page recalculates from these lists.
    ===================================================================== */
 const SEASON = "2026–27";
-const UPDATED = "Nov 2, 2026";
+const UPDATED = "Nov 16, 2026";
 
 const GAMES = [
   { date: "2026-09-20", opponent: "Heights", gf: 5,  ga: 3, scorers: [42, 94, 9, 3, 8] },
@@ -30,6 +30,7 @@ const GAMES = [
   { date: "2026-10-18", opponent: "",        gf: 10, ga: 1, scorers: [15, 15, 15, 10, 94, 9, 11, 22, 14, 22] },
   { date: "2026-10-25", opponent: "",        gf: 6,  ga: 5, scorers: [19, 98, 22, 12, 94, 11] },
   { date: "2026-11-01", opponent: "",        gf: 3,  ga: 2, scorers: [8, 8, 15] },
+  { date: "2026-11-15", opponent: "",        gf: 2,  ga: 4, scorers: [8, 11] },
 ];
 
 const LINES = {
@@ -39,23 +40,23 @@ const LINES = {
 };
 
 const ROSTER = [
-  { num: 14, name: "Mike Eppich",      line: "A", rsvp: ["In",  "In",  "In",  "In",  "In",  "In"]  },
-  { num: 19, name: "Brian Maher",      line: "A", rsvp: ["In",  "In",  "In",  "In",  "In",  "In"]  },
-  { num: 15, name: "Charlie Eppich",   line: "A", rsvp: ["Out", "In",  "In",  "In",  "Out", "In"]  },
-  { num: 98, name: "Bobby Malinowski", line: "A", rsvp: ["In",  "In",  "Out", "In",  "In",  "In"]  },
-  { num: 24, name: "Matt Gresko",      line: "A", rsvp: ["In",  "In",  "Out", "In",  "In",  "In"]  },
-  { num: 94, name: "Eugene Jurco",     line: "B", rsvp: ["In",  "In",  "In",  "In",  "In",  "In"]  },
-  { num: 12, name: "Nick Bartucci",    line: "B", rsvp: ["In",  "In",  "In",  "Out", "In",  "In"]  },
-  { num: 9,  name: "Cameron King",     line: "B", rsvp: ["In",  "In",  "In",  "In",  "In",  "In"]  },
-  { num: 3,  name: "John Angerola",    line: "B", rsvp: ["In",  "In",  "In",  "Out", "In",  "In"]  },
-  { num: 22, name: "Andy Gargiulo",    line: "B", rsvp: ["In",  "In",  "In",  "In",  "In",  "Out"] },
-  { num: 8,  name: "Joe Godina",       line: "B", rsvp: ["In",  "In",  "In",  "In",  "In",  "In"]  },
-  { num: 11, name: "Josh Ferreri",     line: "B", rsvp: ["In",  "",    "",    "In",  "In",  "Out"] },
-  { num: 7,  name: "Mike McBride",     line: "C", rsvp: ["Out", "In",  "Out", "In",  "In",  "In"]  },
-  { num: 10, name: "Marty McBride",    line: "C", rsvp: ["In",  "Out", "Out", "In",  "In",  "Out"] },
-  { num: 67, name: "Jackie Narowitz",  line: "C", rsvp: ["In",  "In",  "In",  "Out", "In",  "In"]  },
-  { num: 59, name: "Amanda Jurco",     line: "C", rsvp: ["In",  "In",  "In",  "In",  "In",  "In"]  },
-  { num: 42, name: "Steve Ultrup",     line: "C", rsvp: ["In",  "In",  "In",  "In",  "In",  "Out"] },
+  { num: 14, name: "Mike Eppich",      line: "A", rsvp: ["In",  "In",  "In",  "In",  "In",  "In",  "In"]  },
+  { num: 19, name: "Brian Maher",      line: "A", rsvp: ["In",  "In",  "In",  "In",  "In",  "In",  "In"]  },
+  { num: 15, name: "Charlie Eppich",   line: "A", rsvp: ["Out", "In",  "In",  "In",  "Out", "In",  "Out"] },
+  { num: 98, name: "Bobby Malinowski", line: "A", rsvp: ["In",  "In",  "Out", "In",  "In",  "In",  "In"]  },
+  { num: 24, name: "Matt Gresko",      line: "A", rsvp: ["In",  "In",  "Out", "In",  "In",  "In",  "In"]  },
+  { num: 94, name: "Eugene Jurco",     line: "B", rsvp: ["In",  "In",  "In",  "In",  "In",  "In",  "In"]  },
+  { num: 12, name: "Nick Bartucci",    line: "B", rsvp: ["In",  "In",  "In",  "Out", "In",  "In",  "In"]  },
+  { num: 9,  name: "Cameron King",     line: "B", rsvp: ["In",  "In",  "In",  "In",  "In",  "In",  "Out"] },
+  { num: 3,  name: "John Angerola",    line: "B", rsvp: ["In",  "In",  "In",  "Out", "In",  "In",  "In"]  },
+  { num: 22, name: "Andy Gargiulo",    line: "B", rsvp: ["In",  "In",  "In",  "In",  "In",  "Out", "In"]  },
+  { num: 8,  name: "Joe Godina",       line: "B", rsvp: ["In",  "In",  "In",  "In",  "In",  "In",  "In"]  },
+  { num: 11, name: "Josh Ferreri",     line: "B", rsvp: ["In",  "",    "",    "In",  "In",  "Out", "In"]  },
+  { num: 7,  name: "Mike McBride",     line: "C", rsvp: ["Out", "In",  "Out", "In",  "In",  "In",  "Out"] },
+  { num: 10, name: "Marty McBride",    line: "C", rsvp: ["In",  "Out", "Out", "In",  "In",  "Out", "In"]  },
+  { num: 67, name: "Jackie Narowitz",  line: "C", rsvp: ["In",  "In",  "In",  "Out", "In",  "In",  "In"]  },
+  { num: 59, name: "Amanda Jurco",     line: "C", rsvp: ["In",  "In",  "In",  "In",  "In",  "In",  "In"]  },
+  { num: 42, name: "Steve Ultrup",     line: "C", rsvp: ["In",  "In",  "In",  "In",  "In",  "Out", "In"]  },
 ];
 /* ===================================================================== */
 </script>
